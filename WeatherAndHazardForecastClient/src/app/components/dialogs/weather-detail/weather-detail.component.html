@@ -1,0 +1,48 @@
+<div class="weatherDayDetails">
+    <div class="weatherHeader">
+        <div class="temperature">
+            {{data.temp}} <fa class="degreesLarge" name="circle-o"></fa>
+            <div class="minMaxTemperature"> <span class="minTemp"> {{data.min_temp}} <fa class="degreesMinMax" name="circle-o"></fa> </span> / {{data.max_temp}} <fa class="degreesMinMax" name="circle-o"></fa> </div>
+            <div class="date"> {{data.valid_date | date: 'fullDate' | slice: 0:-6}} </div>
+        </div>
+        <img class="weatherImage" src="../../../assets/weather icons/static/white/{{data.weather.icon}}.png">
+    </div>
+    <div class="detailsWrapper">
+        <div>
+            <mat-list role="list">
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/{{data.weather.icon}}.png"> Weather: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/c04d.png"> Clouds: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-water-100.png"> Humidity: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-rainy-weather-100.png"> Precipitation: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-wind-100.png"> Wind: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-windsock-100.png"> Wind direction: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-uv-index-100.png"> UV Index: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-pressure-100.png"> Pressure: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-invisible-100.png"> Visibility: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-winter-100.png"> Snow: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-sunrise-100.png"> Sunrise: </mat-list-item>
+                <mat-list-item role="listitem"> <img class="icon" src="../../../assets/weather icons/static/white/icons8-sunset-100.png"> Sunset: </mat-list-item>
+            </mat-list>
+        </div>
+        <div>
+            <mat-list role="list">
+                <mat-list-item role="listitem"> {{data.weather.description}} </mat-list-item>
+                <mat-list-item role="listitem"> {{data.clouds}}% </mat-list-item>
+                <mat-list-item role="listitem"> {{data.rh}}% </mat-list-item>
+                <mat-list-item role="listitem"> {{data.pop}}% ({{data.precip| number : '1.2-2'}} mm)</mat-list-item>
+                <mat-list-item role="listitem"> {{data.wind_spd}} m/s (gust {{data.wind_gust_spd}} m/s)  </mat-list-item>
+                <mat-list-item role="listitem"> {{data.wind_dir}}<fa class="degreesSmall" name="circle-o"></fa>  {{data.wind_cdir}} ({{data.wind_cdir_full}}) </mat-list-item>
+                <mat-list-item role="listitem" *ngIf="data.uv <= 2"> Minimal </mat-list-item>
+                <mat-list-item role="listitem" *ngIf="data.uv > 2 && data.uv <= 4"> Low  </mat-list-item>
+                <mat-list-item role="listitem" *ngIf="data.uv > 4 && data.uv <= 6"> Moderate </mat-list-item>
+                <mat-list-item role="listitem" *ngIf="data.uv > 6 && data.uv <= 9"> High </mat-list-item>
+                <mat-list-item role="listitem" *ngIf="data.uv > 9"> Very High </mat-list-item>
+                <mat-list-item role="listitem"> {{data.pres}} mb </mat-list-item>
+                <mat-list-item role="listitem"> {{data.vis | number : '1.0-0'}} km </mat-list-item>
+                <mat-list-item role="listitem"> {{data.snow}} mm (depth: {{data.snow_depth}} mm) </mat-list-item>
+                <mat-list-item role="listitem"> {{data.sunrise_ts | date: 'shortTime'}} </mat-list-item>
+                <mat-list-item role="listitem"> {{data.sunset_ts | date: 'shortTime'}} </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+</div>

@@ -9,7 +9,7 @@ namespace WeatherAndHazardForecastAPI.Models.DbModels
     public class User : IdentityUser
     {
         public virtual ICollection<UserLocation> UserLocations { get; set; }
-        public virtual ICollection<WeatherArchive> WeatherArchives { get; set; }
-        public virtual ICollection<HazardArchive> HazardArchives { get; set; }
+        public virtual ICollection<SevereWeatherArchive> SevereWeathers { get; set; }
+        public virtual ICollection<CovidArchive> CovidArchives { get; set; }
     }
 }

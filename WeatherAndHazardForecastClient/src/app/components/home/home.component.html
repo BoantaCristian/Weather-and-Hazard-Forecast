@@ -1,0 +1,126 @@
+<img [src]="background" class="background">
+
+<app-toolbar></app-toolbar>
+
+<div class="weatherInfo">
+    <mat-card class="currentDay" (click)="openWeatherDetailsDialog(currentDay)">
+        <div class="weatherDetails">
+            <div class="temperature">
+                {{currentDay.temp}} <fa class="degreesLarge" name="circle-o"></fa>
+                <div class="minMaxTemperature"> <span class="minTemp"> {{currentDay.min_temp}} <fa class="degreesMinMax" name="circle-o"></fa> </span> / {{currentDay.max_temp}} <fa class="degreesMinMax" name="circle-o"></fa> </div>
+            </div>
+            <div class="icon">
+                <img src="../../../assets/weather icons/static/white/{{currentDay.weather.icon}}.png">
+                <div class="description"> {{currentDay.weather.description}} </div>
+            </div>
+            <div class="location"> {{weatherForecast.city_name}} </div>
+        </div>
+        <div class="weatherDisplayAttributes">
+            <div class="cardHumidity">
+                <img class="humidityIcon" src="../../../assets/weather icons/static/white/icons8-water-100.png">
+                <span> {{currentDay.rh}}% </span>
+            </div>
+            <div class="cardPrecipitaionProbability">
+                <img class="windIcon" src="../../../assets/weather icons/static/white/icons8-rainy-weather-100.png">
+                <span> {{currentDay.pop}}% </span>
+            </div>
+            <div class="cardWind">
+                <img class="windIcon" src="../../../assets/weather icons/static/white/icons8-wind-100.png">
+                <span> {{currentDay.wind_spd}} km/h </span>
+            </div>
+            <div class="cardUvIndex">
+                <img class="windIcon" src="../../../assets/weather icons/static/white/icons8-uv-index-100.png">
+                <span *ngIf="currentDay.uv <= 2"> Minimal </span>
+                <span *ngIf="currentDay.uv > 2 && currentDay.uv <= 4"> Low </span>
+                <span *ngIf="currentDay.uv > 4 && currentDay.uv <= 6"> Moderate </span>
+                <span *ngIf="currentDay.uv > 6 && currentDay.uv <= 9"> High </span>
+                <span *ngIf="currentDay.uv > 9"> Very High </span>
+            </div>
+            <div class="cardWind"> 
+                <img class="windIcon" src="../../../assets/weather icons/static/white/icons8-sunrise-100.png">
+                <span> {{currentDay.sunrise_ts | date: 'shortTime'}} </span>
+            </div>
+            <div class="cardWind"> 
+                <img class="windIcon" src="../../../assets/weather icons/static/white/icons8-sunset-100.png">
+                <span> {{currentDay.sunset_ts | date: 'shortTime'}} </span>
+            </div>
+        </div>
+        <div class="dateTime"> 
+            <span> {{timeUpdated | date: 'shortTime'}} - {{currentDay.valid_date | date: 'fullDate'}} </span> 
+            <button class="updateButton" id="updateButton" (click)="update($event)"> <fa class="update" name="repeat"></fa> </button>
+        </div>
+    </mat-card>
+    <mat-card class="weatherOptions">
+        <table class="currentLocation">
+            <tr>
+                <td class="cell"><img class="weatherOptionsIcon" src="../../../assets/weather icons/static/white/icons8-location-100.png"></td>
+                <td class="cell" *ngIf="!loggedUser"><span class="locationText"> current location </span></td>
+                <td class="cell" *ngIf="loggedUser"><span class="locationText"> {{weatherForecast.city_name}} </span></td>
+            </tr>
+            <tr *ngIf="!loggedUser" class="authenticate" (click)="authenticate()">
+                <td class="cell"><img class="weatherOptionsIcon" src="../../../assets/weather icons/static/white/icons8-login-100.png"></td>
+                <td class="cell"><span class="locationText"> authenticate </span></td>
+            </tr>
+            <tr *ngIf="loggedUser">
+                <td class="cell"><img class="weatherOptionsIcon" src="../../../assets/weather icons/static/white/icons8-next-location-100.png"></td>
+                <td class="cell">
+                    <form>
+                        <mat-form-field>
+                            <input matInput type="text" id="searchLocation" [formControl]="locationsFromControl" [matAutocomplete]="auto" [(ngModel)]="cityToSearch" (keyup.enter)="getWeatherByLocation(cityToSearch)"  placeholder="Select Location" aria-label="Number">
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option *ngFor="let location of filteredLocations | async" [value]="location" (click)="getWeatherByLocation(location)">
+                                <button class="selectLocationOption"> {{location}} </button>
+                            </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </mat-card>
+</div>
+<div class="fiveDay">
+    <div *ngFor="let day of weatherForecast.data | slice:1">
+        <mat-card class="weatherCard" (click)="openWeatherDetailsDialog(day)">
+            <div class="cardTemperatures"> 
+                <div> <span> {{day.temp}} </span> <fa class="degreesMedium" name="circle-o"></fa> </div>
+                <div class="cardMinMaxTemperature"> 
+                    <span class="minTemp"> {{day.min_temp}} <fa class="degreesSmall" name="circle-o"></fa> </span> / 
+                    <span> {{day.max_temp}} <fa class="degreesSmall" name="circle-o"></fa> </span>
+                </div>
+                <div class="cardDate"> {{day.valid_date | date: 'fullDate' | slice: 0:-6}} </div>
+            </div>
+            <div class="cardWeatherIcon"> 
+                <img src="../../../assets/weather icons/static/white/{{day.weather.icon}}.png">
+            </div>
+            <div class="cardDescription"> {{day.weather.description}} </div>
+            <div class="cardWeatherDetails">
+                <div class="cardDetailsRow">
+                    <div class="cardHumidity">
+                        <img class="humidityIcon" src="../../../assets/weather icons/static/white/icons8-water-100.png">
+                        <span> {{day.rh}}% </span>
+                    </div>
+                    <div class="cardPrecipitaionProbability">
+                        <img class="windIcon" src="../../../assets/weather icons/static/white/icons8-rainy-weather-100.png">
+                        <span> {{day.pop}}% </span>
+                    </div>
+                </div>
+                <div class="cardDetailsRow">
+                    <div class="cardUvIndex">
+                        <img class="windIcon" src="../../../assets/weather icons/static/white/icons8-uv-index-100.png">
+                        <span *ngIf="day.uv <= 2"> Minimal </span>
+                        <span *ngIf="day.uv > 2 && day.uv <= 4"> Low </span>
+                        <span *ngIf="day.uv > 4 && day.uv <= 6"> Moderate </span>
+                        <span *ngIf="day.uv > 6 && day.uv <= 9"> High </span>
+                        <span *ngIf="day.uv > 9"> Very High </span>
+                    </div>
+                    <div class="cardWind">
+                        <img class="windIcon" src="../../../assets/weather icons/static/white/icons8-wind-100.png">
+                        <span> {{day.wind_spd}} km/h </span>
+                    </div>
+                    
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

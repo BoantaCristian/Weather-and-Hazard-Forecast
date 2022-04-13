@@ -1,0 +1,11 @@
+.background{
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    min-width: 1920px;
+    background-size: cover;
+    background-attachment:fixed !important;
+    background-repeat: no-repeat;
+    z-index: -1;
+}

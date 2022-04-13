@@ -19,7 +19,8 @@ namespace WeatherAndHazardForecastAPI.Models.ApplicationContext
         public DbSet<Location> Locations { get; set; }
         public DbSet<UserLocation> UserLocations { get; set; }
         public DbSet<WeatherArchive> WeatherArchives { get; set; }
-        public DbSet<HazardArchive> HazardArchives { get; set; }
-        public DbSet<HazardType> HazardTypes { get; set; }
+        public DbSet<SevereWeatherArchive> SevereWeathers { get; set; }
+        public DbSet<Earthquake> Earthquakes { get; set; }
+        public DbSet<CovidArchive> CovidArchive { get; set; }
     }
 }

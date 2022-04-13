@@ -1,0 +1,100 @@
+<img [src]="background" class="background">
+
+<app-toolbar></app-toolbar>
+<router-outlet></router-outlet>
+
+<!-- covid -->
+<div class="hazardWrapper" *ngIf="currentPage == 'covid'">
+    <mat-card class="currentLocationHazard">
+        <h1 class="title"> Current Location </h1>
+        <mat-table [dataSource]="covid">
+            <ng-container matColumnDef="country_text">
+                <mat-header-cell *matHeaderCellDef> Country </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> 
+                    <form>
+                        <mat-form-field class="selectCovidField">
+                            <mat-label>{{cov.country_text}}</mat-label>
+                            <input matInput type="text" id="selectCovidLocation" [formControl]="covidFromControl" [matAutocomplete]="auto" [(ngModel)]="covidLocationToSearch" (keyup.enter)="selectCovidLocation(covidLocationToSearch)"  placeholder="" aria-label="Number">
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option *ngFor="let location of filteredCovidLocations | async" [value]="location" (click)="selectCovidLocation(location)">
+                                <button class="selectLocationOption"> {{location}} </button>
+                            </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </form>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="new_Cases_text">
+                <mat-header-cell *matHeaderCellDef> New Cases </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.new_Cases_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="new_Deaths_text">
+                <mat-header-cell *matHeaderCellDef> New Deaths </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.new_Deaths_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total_Cases_text">
+                <mat-header-cell *matHeaderCellDef> Total Cases </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.total_Cases_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total_Deaths_text">
+                <mat-header-cell *matHeaderCellDef> Total Deaths </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.total_Deaths_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total_Recovered_text">
+                <mat-header-cell *matHeaderCellDef> Total Recovered </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.total_Recovered_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="last_Update">
+                <mat-header-cell *matHeaderCellDef> Last Update </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.last_Update}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="covidColumns"></mat-header-row>
+            <mat-row *matRowDef="let covid; columns: covidColumns"></mat-row>
+        </mat-table>
+    </mat-card>
+    <mat-card class="archiveHazard">
+        <h1 class="title"> Your locations </h1>
+        <mat-table [dataSource]="covid" matSort>
+            <ng-container matColumnDef="country_text">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Country </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.country_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="new_Cases_text">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> New Cases </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.new_Cases_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="new_Deaths_text">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> New Deaths </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.new_Deaths_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total_Cases_text">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total Cases </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.total_Cases_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total_Deaths_text">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total Deaths </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.total_Deaths_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total_Recovered_text">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total Recovered </mat-header-cell>
+                <mat-cell *matCellDef="let cov"> {{cov.total_Recovered_text}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="last_Update">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Last Update </mat-header-cell>
+                <mat-cell *matCellDef="let cov" class="updateField"> 
+                    <span> {{cov.last_Update}} </span>
+                    <button class="updateButton" [id]="cov.id" (click)="updateCovid(cov)"> <fa class="update" name="repeat"></fa> </button>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="covidColumns"></mat-header-row>
+            <mat-row *matRowDef="let covid; columns: covidColumns"></mat-row>
+        </mat-table><br><br>
+        <mat-paginator #covidPaginator [pageSizeOptions]="[3, 5, 10]" [pageSize]="1" showFirstLastButtons> </mat-paginator>
+        <mat-form-field class="search">
+            <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="search('covid')">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </mat-card>
+</div>

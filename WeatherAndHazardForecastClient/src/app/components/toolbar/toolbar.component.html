@@ -1,0 +1,26 @@
+<mat-card *ngIf="loggedUser" class="taskbar">
+    <a class="taskbarLink" *ngIf="loggedUser.role == 'Admin'" (click)="navigate('admin')"> 
+        <img class="taskbarIcon" src="../../../assets/weather icons/static/white/icons8-admin-settings-male-100.png">
+        <div class="taskbarText"> admin </div>
+    </a>
+    <a class="taskbarLink" (click)="navigate('')"> 
+        <img class="taskbarIcon" src="../../../assets/weather icons/static/white/weatherIcon.png">
+        <div class="taskbarText"> weather </div>
+    </a>
+    <a class="taskbarLink" (click)="navigate('weather')"> 
+        <img class="taskbarIcon" src="../../../assets/weather icons/static/white/icons8-error-100.png">
+        <div class="taskbarText"> alerts </div>
+    </a>
+    <a class="taskbarLink" (click)="navigate('earthquakes')"> 
+        <img class="taskbarIcon" src="../../../assets/weather icons/static/white/icons8-earthquakes-100.png">
+        <div class="taskbarText"> earthq </div>
+    </a>
+    <a class="taskbarLink" (click)="navigate('covid')"> 
+        <img class="taskbarIcon" src="../../../assets/weather icons/static/white/icons8-biohazard-100.png">
+        <div class="taskbarText"> covid </div>
+    </a>
+    <a class="taskbarLink" (click)="logout()">
+        <img class="taskbarIcon" src="../../../assets/weather icons/static/white/icons8-logout-rounded-left-100.png">
+        <div class="taskbarText"> logout </div>
+    </a>
+</mat-card>

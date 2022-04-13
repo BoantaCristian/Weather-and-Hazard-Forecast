@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WeatherAndHazardForecastAPI.Models.ApplicationContext;
@@ -44,10 +45,13 @@ namespace WeatherAndHazardForecastAPI.Controllers
             };
             try
             {
+                if (await _userManager.FindByEmailAsync(model.Email) != null)
+                    return BadRequest(new { message = "Email already taken" });
+
                 var result = await _userManager.CreateAsync(newUser, model.Password);
                 await _userManager.AddToRoleAsync(newUser, model.Role);
 
-                return Ok(newUser);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -59,7 +63,7 @@ namespace WeatherAndHazardForecastAPI.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login(LoginDTO model)
         {
-            var user = await _userManager.FindByEmailAsync(model.UserName);
+            var user = await _userManager.FindByNameAsync(model.UserName);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var role = await _userManager.GetRolesAsync(user);
@@ -105,6 +109,35 @@ namespace WeatherAndHazardForecastAPI.Controllers
                     user.UserName,
                     user.Email,
                     role,
+                };
+            }
+            else
+            {
+                return BadRequest(new { message = "User not found!" });
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetUserWithLocations")]
+        public async Task<Object> GetUserWithLocations()
+        {
+            var userId = User.Claims.First(c => c.Type == "UserId").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            var roleObject = await _userManager.GetRolesAsync(user);
+            var role = roleObject.First();
+
+            var locationsOfUser = _context.UserLocations.Include(i => i.User).Include(i => i.Location).Where(w => w.User.Id == userId).Select(s => s.Location.Country_Name);
+
+
+            if (user != null)
+            {
+                return new
+                {
+                    user.UserName,
+                    user.Email,
+                    role,
+                    locationsOfUser
                 };
             }
             else

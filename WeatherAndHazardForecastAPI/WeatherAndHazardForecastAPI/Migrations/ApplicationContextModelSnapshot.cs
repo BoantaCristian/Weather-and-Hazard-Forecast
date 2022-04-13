@@ -189,44 +189,72 @@ namespace WeatherAndHazardForecastAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.HazardArchive", b =>
+            modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.CovidArchive", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("HazardTypeId");
+                    b.Property<string>("Active_Cases_text");
 
-                    b.Property<int?>("LocationId");
+                    b.Property<string>("Country_text");
+
+                    b.Property<string>("Last_Update");
+
+                    b.Property<string>("New_Cases_text");
+
+                    b.Property<string>("New_Deaths_text");
+
+                    b.Property<string>("Total_Cases_text");
+
+                    b.Property<string>("Total_Deaths_text");
+
+                    b.Property<string>("Total_Recovered_text");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HazardTypeId");
-
-                    b.HasIndex("LocationId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("HazardArchives");
+                    b.ToTable("CovidArchive");
                 });
 
-            modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.HazardType", b =>
+            modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.Earthquake", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Date");
 
-                    b.Property<string>("Severity");
+                    b.Property<string>("Depth");
 
-                    b.Property<string>("Type");
+                    b.Property<string>("Effects");
+
+                    b.Property<string>("Latitude");
+
+                    b.Property<string>("Location");
+
+                    b.Property<string>("Longitude");
+
+                    b.Property<string>("Magnitude");
+
+                    b.Property<string>("Nearest_city");
+
+                    b.Property<string>("Region");
+
+                    b.Property<string>("Status");
+
+                    b.Property<string>("Time");
+
+                    b.Property<string>("Time_ago");
+
+                    b.Property<string>("Timezone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("HazardTypes");
+                    b.ToTable("Earthquakes");
                 });
 
             modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.Location", b =>
@@ -235,13 +263,54 @@ namespace WeatherAndHazardForecastAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City");
+                    b.Property<string>("City_name");
 
-                    b.Property<string>("Country");
+                    b.Property<string>("Country_Name");
+
+                    b.Property<string>("Country_code");
+
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longitude");
+
+                    b.Property<string>("State_code");
+
+                    b.Property<string>("Timezone");
 
                     b.HasKey("Id");
 
                     b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.SevereWeatherArchive", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Local_End_Date");
+
+                    b.Property<string>("Local_Start_Date");
+
+                    b.Property<int?>("LocationId");
+
+                    b.Property<string>("Regions");
+
+                    b.Property<string>("Severity");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SevereWeathers");
                 });
 
             modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.UserLocation", b =>
@@ -269,7 +338,11 @@ namespace WeatherAndHazardForecastAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Humidity");
+                    b.Property<double>("Clouds");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Image");
 
                     b.Property<int?>("LocationId");
 
@@ -277,25 +350,43 @@ namespace WeatherAndHazardForecastAPI.Migrations
 
                     b.Property<double>("MinTemperature");
 
-                    b.Property<string>("Sunrise");
+                    b.Property<double>("Precipitations");
 
-                    b.Property<string>("Sunset");
+                    b.Property<double>("Pressure");
+
+                    b.Property<int>("Probability_Precipitation");
+
+                    b.Property<int>("Relative_Humidity");
+
+                    b.Property<double>("Snow");
+
+                    b.Property<double>("Snow_Depth");
+
+                    b.Property<long>("Sunrise");
+
+                    b.Property<long>("Sunset");
 
                     b.Property<double>("Temperature");
 
-                    b.Property<string>("UVIndex");
+                    b.Property<double>("UV_Index");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("Valid_date");
 
-                    b.Property<string>("WeatherType");
+                    b.Property<double>("Visibility");
 
-                    b.Property<int>("Wind");
+                    b.Property<string>("Wind_Direction");
+
+                    b.Property<int>("Wind_Direction_Degrees");
+
+                    b.Property<string>("Wind_Direction_Full");
+
+                    b.Property<double>("Wind_Gust_Speed");
+
+                    b.Property<double>("Wind_Speed");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("WeatherArchives");
                 });
@@ -355,18 +446,21 @@ namespace WeatherAndHazardForecastAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.HazardArchive", b =>
+            modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.CovidArchive", b =>
                 {
-                    b.HasOne("WeatherAndHazardForecastAPI.Models.DbModels.HazardType", "HazardType")
-                        .WithMany("HazardArchives")
-                        .HasForeignKey("HazardTypeId");
+                    b.HasOne("WeatherAndHazardForecastAPI.Models.DbModels.User", "User")
+                        .WithMany("CovidArchives")
+                        .HasForeignKey("UserId");
+                });
 
+            modelBuilder.Entity("WeatherAndHazardForecastAPI.Models.DbModels.SevereWeatherArchive", b =>
+                {
                     b.HasOne("WeatherAndHazardForecastAPI.Models.DbModels.Location", "Location")
-                        .WithMany("HazardArchives")
+                        .WithMany("SevereWeathers")
                         .HasForeignKey("LocationId");
 
                     b.HasOne("WeatherAndHazardForecastAPI.Models.DbModels.User", "User")
-                        .WithMany("HazardArchives")
+                        .WithMany("SevereWeathers")
                         .HasForeignKey("UserId");
                 });
 
@@ -386,10 +480,6 @@ namespace WeatherAndHazardForecastAPI.Migrations
                     b.HasOne("WeatherAndHazardForecastAPI.Models.DbModels.Location", "Location")
                         .WithMany("WeatherArchives")
                         .HasForeignKey("LocationId");
-
-                    b.HasOne("WeatherAndHazardForecastAPI.Models.DbModels.User", "User")
-                        .WithMany("WeatherArchives")
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

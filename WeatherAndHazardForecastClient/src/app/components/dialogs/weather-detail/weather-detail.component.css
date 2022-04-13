@@ -1,0 +1,97 @@
+.weatherDayDetails{
+    color: white;
+    margin-bottom: 10px;
+}
+.title{
+    color: white;
+    font-weight: 200;
+    text-align: center;
+    margin: 10px;
+}
+.detailsWrapper{
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+.weatherHeader{
+    display: flex;
+    justify-content: center;
+}
+.weatherImage{
+    position: relative !important;
+    top: 25px !important;
+    width: 130px;
+    height: 130px;
+    margin: 0 10px;
+}
+.temperature{
+    font-size: 80px;
+    font-weight: 400;
+    text-align: center;
+    position: relative;
+    margin: 0 10px;
+}
+.minMaxTemperature{
+    font-size: 20px;
+    position: relative;
+    text-align: left;
+    top: -20px;
+}
+.date{
+    position: relative;
+    top: -20px;
+    font-size: 14px;
+    text-align: left;
+}
+.description{
+    text-align: center;
+    font-size: 24px;
+}
+mat-list-item{
+    color: white !important;
+    margin-bottom: -10px !important;
+}
+::ng-deep.mat-dialog-container {
+    background-color: rgba(75, 75, 75, 0.096);
+    backdrop-filter: blur(15px) !important;
+    border-radius: 20px !important;
+}
+.icon{
+    width: 25px;
+    margin: 5px;
+    margin-right: 15px;
+}
+.degreesLarge{
+    font-size: 30px;
+    font-weight: 600;
+    position: relative;
+    top: -35px;
+    left: -5px;
+    text-align: center;
+}
+.degreesMedium{
+    font-size: 14px;
+    font-weight: 600;
+    position: relative;
+    top: -23px;
+    left: -5px;
+}
+.degreesSmall{
+    font-size: 7px;
+    font-weight: 600;
+    position: relative;
+    top: -3.3px;
+    left: 0px;
+    margin-left: 2px;
+    margin-right: 6px;
+}
+.degreesMinMax{
+    font-size: 7px;
+    font-weight: 600;
+    position: relative;
+    top: -9px;
+    left: -1px;
+}
+.minTemp{
+    color: rgb(211, 211, 211);
+}

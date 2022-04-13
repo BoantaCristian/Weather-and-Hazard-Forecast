@@ -1,0 +1,128 @@
+.background{
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    min-width: 1920px;
+    background-size: cover;
+    background-attachment:fixed !important;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+mat-card{
+    background-color: rgba(70, 70, 70, 0.096);
+    backdrop-filter: blur(15px) !important;
+    color: white;
+    box-shadow: 0px 0px 35px black !important;
+    border: none !important;
+    border-radius: 20px;
+}
+.hazardWrapper{
+    color: white;
+    position: relative;
+    top: 20%;
+    width: 75%;
+    margin: 0 auto;
+    border-radius: 20px;
+}
+.currentLocationHazard{
+    position: relative;
+}
+.archiveHazard{
+    position: relative;
+    top: 50px !important;
+    min-height: 390px;
+}
+.title{
+    color: white;
+    font-weight: 200;
+    text-align: center;
+    margin: 10px;
+}
+.updateField{
+    display: flex; 
+    justify-content: space-between;
+}
+.updateButton{
+    position: relative;
+    top: -20%;
+    left: -40px;
+    background: none;
+    border: none;
+    color: white;
+    padding: 5px 0px;
+    transition: 400ms ease;
+}
+.updateButton:hover{
+    transform: rotate(45deg);
+}
+.update{
+    position: relative;
+}
+.selectLocationOption{
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+}
+.selectCovidField{
+    width: 80%;
+}
+.search{
+    position: absolute;
+    bottom: 18px;
+    margin-left: 43px;
+    z-index: 1;
+    color: white;
+}
+mat-table, mat-paginator{
+    background-color: transparent !important;
+    margin: 20px 20px !important;
+    color: white;
+    font-size: 14px;
+}
+mat-paginator{
+    margin-right: 30px !important;
+    position: absolute;
+    right: 13px;
+    bottom: 0px;
+}
+::ng-deep .mat-paginator .mat-icon-button{
+    color: white !important;
+}
+::ng-deep .mat-paginator-page-size-options {
+    color: white !important;
+}
+mat-header-cell{
+    color: white !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 16px;
+}
+mat-cell{
+    color: white !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+mat-row:hover{
+    background-color: rgba(255, 255, 255, 0.123);
+    cursor: pointer;
+}
+::ng-deep .mat-sort-header-arrow {
+    color: white !important;
+}
+::ng-deep .mat-form-field-label {
+    color: white !important;
+}
+::ng-deep.mat-form-field-underline {
+    background-color: white !important;
+}
+::ng-deep.mat-form-field-ripple {
+    background-color: white !important;;
+}
+::ng-deep input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white;
+}

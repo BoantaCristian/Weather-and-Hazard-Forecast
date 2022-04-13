@@ -1,0 +1,25 @@
+.formWrapper{
+    width: 450px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(75, 75, 75, 0.096);
+    backdrop-filter: blur(15px) !important;
+    border-radius: 40px;
+}
+mat-card{
+    box-shadow: 0px 0px 35px black !important;
+    border: none !important;
+}
+.background{
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    min-width: 1920px;
+    background-size: cover;
+    background-attachment:fixed !important;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
